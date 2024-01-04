@@ -19,9 +19,11 @@ export async function POST(req) {
         line_items: res,
         mode: 'payment',
         success_url:
-          'https://myfash-ecommerce.vercel.app/checkout' + '?status=success',
+          'https://myfash-ecommerce-r2ztgsyum-fardins-projects-0e134bfe.vercel.app/checkout' +
+          '?status=success',
         cancel_url:
-          'https://myfash-ecommerce.vercel.app/checkout' + '?status=cancel',
+          'https://myfash-ecommerce-r2ztgsyum-fardins-projects-0e134bfe.vercel.app/checkout' +
+          '?status=cancel',
       });
 
       return NextResponse.json({
