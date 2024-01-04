@@ -83,7 +83,7 @@ export const deleteProduct = async (id) => {
 export const productByCategory = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/admin/product-by-category?id=${id}`,
+      `https://myfash-ecommerce.vercel.app/api/admin/product-by-category?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 
@@ -100,7 +100,7 @@ export const productByCategory = async (id) => {
 export const productById = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/admin/product-by-id?id=${id}`,
+      `https://myfash-ecommerce.vercel.app/api/admin/product-by-id?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 
