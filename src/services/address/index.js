@@ -58,7 +58,7 @@ export const updateAddress = async (formData) => {
 export const deleteAddress = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/address/delete-address?id=${id}`,
+      `/api/address/delete-address?id=${id}`,
       {
         method: 'DELETE',
         headers: {
