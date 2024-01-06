@@ -8,6 +8,7 @@ export const addToCart = async (formData) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('token')}`,
       },
+      cache:'no-store',
       body: JSON.stringify(formData),
     });
 
