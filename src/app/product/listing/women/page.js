@@ -1,3 +1,5 @@
+'use client'
+
 import CommonListing from '@/components/CommonListing';
 import { productByCategory } from '@/services/product';
 
