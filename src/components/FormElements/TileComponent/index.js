@@ -8,7 +8,7 @@ export default function TileComponent({ data, selected = [], onClick }) {
             selected &&
             selected.length &&
             selected.map((item) => item.id).indexOf(dataItem.id) !== -1
-              ? 'bg-black'
+              ? ''
               : ''
           }`}
           key={dataItem.id}
@@ -18,7 +18,7 @@ export default function TileComponent({ data, selected = [], onClick }) {
               selected &&
               selected.length &&
               selected.map((item) => item.id).indexOf(dataItem.id) !== -1
-                ? 'text-white'
+                ? 'text-white border-2 border-green-700'
                 : ''
             }`}
           >

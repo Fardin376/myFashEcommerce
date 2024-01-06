@@ -22,11 +22,10 @@ import {
 } from 'firebase/storage';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
-import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
+import { resolve } from 'styled-jsx/css';
 
 const app = initializeApp(firebaseConfig);
-
 const storage = getStorage(app, firebaseStroageURL);
 
 const createUniqueFileName = (getFile) => {
@@ -36,9 +35,9 @@ const createUniqueFileName = (getFile) => {
   return `${getFile.name}-${timeStamp}-${randomStringValue}`;
 };
 
-async function helperForUploadingImageToFirebase(file) {
+async function helperForUPloadingImageToFirebase(file) {
   const getFileName = createUniqueFileName(file);
-  const storageReference = ref(storage, `myFash/${getFileName}`);
+  const storageReference = ref(storage, `ecommerce/${getFileName}`);
   const uploadImage = uploadBytesResumable(storageReference, file);
 
   return new Promise((resolve, reject) => {
@@ -51,12 +50,8 @@ async function helperForUploadingImageToFirebase(file) {
       },
       () => {
         getDownloadURL(uploadImage.snapshot.ref)
-          .then((downloadURL) => {
-            resolve(downloadURL);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+          .then((downloadUrl) => resolve(downloadUrl))
+          .catch((error) => reject(error));
       }
     );
   });
@@ -67,114 +62,93 @@ const initialFormData = {
   price: 0,
   description: '',
   category: 'men',
+  sizes: [],
   deliveryInfo: '',
   onSale: 'no',
-  sizes: [],
   imageUrl: '',
   priceDrop: 0,
 };
 
 export default function AdminAddNewProduct() {
   const [formData, setFormData] = useState(initialFormData);
+
   const {
     componentLevelLoader,
     setComponentLevelLoader,
     currentUpdatedProduct,
     setCurrentUpdatedProduct,
-    pageLevelLoader,
-    setPageLevelLoader,
   } = useContext(GlobalContext);
-
-  useEffect(() => {
-    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
-  }, [currentUpdatedProduct]);
 
   console.log(currentUpdatedProduct);
 
   const router = useRouter();
 
-  async function handleImage(ev) {
-    const extractImageURL = await helperForUploadingImageToFirebase(
-      ev.target.files[0]
+  useEffect(() => {
+    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
+  }, [currentUpdatedProduct]);
+
+  async function handleImage(event) {
+    const extractImageUrl = await helperForUPloadingImageToFirebase(
+      event.target.files[0]
     );
 
-    if (extractImageURL !== '') {
+    if (extractImageUrl !== '') {
       setFormData({
         ...formData,
-        imageUrl: extractImageURL,
+        imageUrl: extractImageUrl,
       });
     }
   }
 
   function handleTileClick(getCurrentItem) {
-    let copySizes = [...formData.sizes];
-    const index = copySizes.findIndex((item) => item.id === getCurrentItem.id);
+    let cpySizes = [...formData.sizes];
+    const index = cpySizes.findIndex((item) => item.id === getCurrentItem.id);
 
     if (index === -1) {
-      copySizes.push(getCurrentItem);
+      cpySizes.push(getCurrentItem);
     } else {
-      copySizes = copySizes.filter((item) => item.id !== getCurrentItem.id);
+      cpySizes = cpySizes.filter((item) => item.id !== getCurrentItem.id);
     }
 
     setFormData({
       ...formData,
-      sizes: copySizes,
+      sizes: cpySizes,
     });
   }
 
   async function handleAddProduct() {
     setComponentLevelLoader({ loading: true, id: '' });
-
     const res =
       currentUpdatedProduct !== null
         ? await updateProduct(formData)
         : await addNewProduct(formData);
 
+    console.log(res);
+
     if (res.success) {
       setComponentLevelLoader({ loading: false, id: '' });
-
       toast.success(res.message, {
-        position: toast.POSITION.TOP_LEFT,
+        position: toast.POSITION.TOP_RIGHT,
       });
 
-      setCurrentUpdatedProduct(null);
-
       setFormData(initialFormData);
-
+      setCurrentUpdatedProduct(null);
       setTimeout(() => {
         router.push('/admin-view/all-products');
       }, 1000);
     } else {
-      setComponentLevelLoader({ loading: false, id: '' });
       toast.error(res.message, {
-        position: toast.POSITION.TOP_LEFT,
+        position: toast.POSITION.TOP_RIGHT,
       });
+      setComponentLevelLoader({ loading: false, id: '' });
       setFormData(initialFormData);
     }
-
-    console.log(res);
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setPageLevelLoader(false);
-    }, 2000);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+  console.log(formData);
 
   return (
     <div className="w-full mt-5 mr-0 mb-0 ml-0 relative">
-      {pageLevelLoader && (
-        <div className="my-2 w-full h-screen flex justify-center items-center">
-          <PulseLoader
-            color={'#000000'}
-            loading={pageLevelLoader}
-            size={30}
-            data-testid="loader"
-          />
-        </div>
-      )}
       <div className="flex flex-col items-start justify-start p-10 bg-white shadow-2xl rounded-xl relative">
         <div className="w-full mt-6 mr-0 mb-0 ml-0 space-y-8">
           <input
@@ -185,14 +159,13 @@ export default function AdminAddNewProduct() {
           />
 
           <div className="flex gap-2 flex-col">
-            <label>Sizes Available:</label>
+            <label>Available sizes</label>
             <TileComponent
               selected={formData.sizes}
               onClick={handleTileClick}
               data={AvailableSizes}
             />
           </div>
-
           {adminAddProductformControls.map((controlItem) =>
             controlItem.componentType === 'input' ? (
               <InputComponent
@@ -200,31 +173,30 @@ export default function AdminAddNewProduct() {
                 placeholder={controlItem.placeholder}
                 label={controlItem.label}
                 value={formData[controlItem.id]}
-                onChange={(ev) => {
+                onChange={(event) => {
                   setFormData({
                     ...formData,
-                    [controlItem.id]: ev.target.value,
+                    [controlItem.id]: event.target.value,
                   });
                 }}
               />
             ) : controlItem.componentType === 'select' ? (
               <SelectComponent
-                options={controlItem.options}
                 label={controlItem.label}
+                options={controlItem.options}
                 value={formData[controlItem.id]}
-                onChange={(ev) => {
+                onChange={(event) => {
                   setFormData({
                     ...formData,
-                    [controlItem.id]: ev.target.value,
+                    [controlItem.id]: event.target.value,
                   });
                 }}
               />
             ) : null
           )}
-
           <button
             onClick={handleAddProduct}
-            className="inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide hover:outline-none hover:bg-slate-200 hover:text-black rounded-md"
+            className="hoverEffect mt-5 inline-flex justify-center bg-black px-4 py-2 text-md font-medium uppercase tracking-wide text-white"
           >
             {componentLevelLoader && componentLevelLoader.loading ? (
               <ComponentLevelLoader

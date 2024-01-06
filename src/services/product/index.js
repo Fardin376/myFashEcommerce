@@ -4,14 +4,17 @@ import Cookies from 'js-cookie';
 
 export const addNewProduct = async (formData) => {
   try {
-    const response = await fetch('/api/admin/add-product', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'applictaion/json',
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      'http://localhost:3000/api/admin/add-product',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'applictaion/json',
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     const data = await response.json();
 
@@ -25,13 +28,10 @@ export const addNewProduct = async (formData) => {
 
 export const getAllAdminProducts = async () => {
   try {
-    const res = await fetch(
-      'https://myfash-ecommerce-r2ztgsyum-fardins-projects-0e134bfe.vercel.app/api/admin/all-products',
-      {
-        method: 'GET',
-        cache: 'no-store',
-      }
-    );
+    const res = await fetch('http://localhost:3000/api/admin/all-products', {
+      method: 'GET',
+      cache: 'no-store',
+    });
 
     const data = await res.json();
 
@@ -45,7 +45,7 @@ export const getAllAdminProducts = async () => {
 
 export const updateProduct = async (formData) => {
   try {
-    const res = await fetch('/api/admin/update-product', {
+    const res = await fetch('http://localhost:3000/api/admin/update-product', {
       method: 'PUT',
       headers: {
         'Content-Type': 'applictaion/json',
@@ -66,12 +66,15 @@ export const updateProduct = async (formData) => {
 
 export const deleteProduct = async (id) => {
   try {
-    const res = await fetch(`/api/admin/delete-product?id=${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
-    });
+    const res = await fetch(
+      `http://localhost:3000/api/admin/delete-product?id=${id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
+      }
+    );
 
     const data = await res.json();
 
@@ -86,7 +89,7 @@ export const deleteProduct = async (id) => {
 export const productByCategory = async (id) => {
   try {
     const res = await fetch(
-      `https://myfash-ecommerce-r2ztgsyum-fardins-projects-0e134bfe.vercel.app/api/admin/product-by-category?id=${id}`,
+      `http://localhost:3000/api/admin/product-by-category?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 
@@ -103,7 +106,7 @@ export const productByCategory = async (id) => {
 export const productById = async (id) => {
   try {
     const res = await fetch(
-      `https://myfash-ecommerce-r2ztgsyum-fardins-projects-0e134bfe.vercel.app/api/admin/product-by-id?id=${id}`,
+      `http://localhost:3000/api/admin/product-by-id?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 
