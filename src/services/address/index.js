@@ -58,7 +58,7 @@ export const updateAddress = async (formData) => {
 export const deleteAddress = async (id) => {
   try {
     const res = await fetch(
-      `/api/address/delete-address?id=${id}`,
+      `https://myfash-ecommerce-uoyktwaho-fardins-projects-0e134bfe.vercel.app/api/address/delete-address?id=${id}`,
       {
         method: 'DELETE',
         headers: {
