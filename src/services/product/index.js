@@ -31,6 +31,10 @@ export const getAllAdminProducts = async () => {
     const res = await fetch('/api/admin/all-products', {
       method: 'GET',
       cache: 'no-store',
+       headers: {
+          'Content-Type': 'applictaion/json',
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        },
     });
 
     const data = await res.json();
@@ -70,7 +74,8 @@ export const deleteProduct = async (id) => {
       `/api/admin/delete-product?id=${id}`,
       {
         method: 'DELETE',
-        headers: {
+         headers: {
+          'Content-Type': 'applictaion/json',
           Authorization: `Bearer ${Cookies.get('token')}`,
         },
       }
@@ -90,7 +95,10 @@ export const productByCategory = async (id) => {
   try {
     const res = await fetch(
       `/api/admin/product-by-category?id=${id}`,
-      { method: 'GET', cache: 'no-store' }
+      { method: 'GET', cache: 'no-store', headers: {
+          'Content-Type': 'applictaion/json',
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        }, }
     );
 
     const data = await res.json();
@@ -107,7 +115,10 @@ export const productById = async (id) => {
   try {
     const res = await fetch(
       `/api/admin/product-by-id?id=${id}`,
-      { method: 'GET', cache: 'no-store' }
+      { method: 'GET', cache: 'no-store',  headers: {
+          'Content-Type': 'applictaion/json',
+          Authorization: `Bearer ${Cookies.get('token')}`,
+        }, }
     );
 
     const data = await res.json();
