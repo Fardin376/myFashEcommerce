@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 export const addNewProduct = async (formData) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/api/admin/add-product',
+      '/api/admin/add-product',
       {
         method: 'POST',
         headers: {
@@ -45,7 +45,7 @@ export const getAllAdminProducts = async () => {
 
 export const updateProduct = async (formData) => {
   try {
-    const res = await fetch('http://localhost:3000/api/admin/update-product', {
+    const res = await fetch('/api/admin/update-product', {
       method: 'PUT',
       headers: {
         'Content-Type': 'applictaion/json',
@@ -67,7 +67,7 @@ export const updateProduct = async (formData) => {
 export const deleteProduct = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/admin/delete-product?id=${id}`,
+      `/api/admin/delete-product?id=${id}`,
       {
         method: 'DELETE',
         headers: {
@@ -89,7 +89,7 @@ export const deleteProduct = async (id) => {
 export const productByCategory = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/admin/product-by-category?id=${id}`,
+      `/api/admin/product-by-category?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 
@@ -106,7 +106,7 @@ export const productByCategory = async (id) => {
 export const productById = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/admin/product-by-id?id=${id}`,
+      `/api/admin/product-by-id?id=${id}`,
       { method: 'GET', cache: 'no-store' }
     );
 

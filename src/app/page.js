@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
 
-export const dynamic = 'force-dynamic';
-
 export default function Home() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
 

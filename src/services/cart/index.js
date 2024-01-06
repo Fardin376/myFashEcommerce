@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 export const addToCart = async (formData) => {
   try {
-    const res = await fetch('http://localhost:3000/api/cart/add-to-cart', {
+    const res = await fetch('/api/cart/add-to-cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export const addToCart = async (formData) => {
 export const getAllCartItems = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/cart/all-cart-items?id=${id}`,
+      `/api/cart/all-cart-items?id=${id}`,
       {
         method: 'GET',
         headers: {
@@ -42,7 +42,7 @@ export const getAllCartItems = async (id) => {
 export const deleteFromCart = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/cart/delete-from-cart?id=${id}`,
+      `/api/cart/delete-from-cart?id=${id}`,
       {
         method: 'DELETE',
         headers: {
