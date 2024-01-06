@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const configOptions = {
+export const configOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
-const connectToDB = async () => {
+export const connectToDB = async () => {
   const connectionUrl =
     'mongodb+srv://myFashAdmin:myFashAdmin12345@cluster0.hhqwcqm.mongodb.net/';
 
