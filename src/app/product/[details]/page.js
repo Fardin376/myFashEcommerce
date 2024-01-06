@@ -1,3 +1,5 @@
+'use client'
+
 import CommonDetails from '@/components/CommonDetails';
 import { productById } from '@/services/product';
 
