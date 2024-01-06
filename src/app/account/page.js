@@ -183,7 +183,7 @@ export default function Account() {
                             Update
                           </button>
                           <button
-                            onClick={() => handleDeleteAddress(item._id)}
+                            onClick={() => handleDeleteAddress(item)}
                             className="hoverEffect mt-5 inline-flex justify-center bg-black px-4 py-2 text-md font-medium uppercase tracking-wide text-white"
                           >
                             {componentLevelLoader &&
